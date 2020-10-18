@@ -28,7 +28,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return { paths, fallback: false };
 };
 
-export const getStaticProps: GetStaticProps = async ({ params }: { params: { id: string } }) => {
-  const postData = await getPostData(params.id);
+type Re = {
+  postData: {
+    id: string;
+    contentHtml: string;
+  };
+};
+export const getStaticProps: GetStaticProps<Re, { id: string }> = async (context) => {
+  const postData = await getPostData(context.params!.id);
   return { props: { postData } };
 };
